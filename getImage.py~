@@ -46,6 +46,9 @@ for line in imgBlockT:
    for row in line.find_all('img'):
       imgListT.append('http:' + row['src'])
 
-for url, title in zip(imgList, titleList):
+for url, title in zip(imgListO, titleListO):
    urllib.urlretrieve(url, os.path.join('chubbiesPics/theOriginals', title + ".jpg"))
+
+for url, title in zip(imgListT, titleListT):
+   urllib.urlretrieve(url, os.path.join('chubbiesPics/theTrunks', title + ".jpg"))
 

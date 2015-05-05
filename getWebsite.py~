@@ -34,9 +34,14 @@ titleList = []
 for line in title:
    titleList.append(line.get_text(" | ", strip=True))
 
+textFile = open("chubbiesList.txt", "w")
 
 for deet, url in zip(detailsList, urlList):
-   print deet + " | " + 'http://www.chubbiesshorts.com' + url
+   textFile.write(deet + " | " + 'http://www.chubbiesshorts.com' + url)
+   textFile.write("\n")
+   textFile.write("\n")
+
+textFile.close()
 
 type(title)
 

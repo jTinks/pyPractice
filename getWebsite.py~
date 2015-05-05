@@ -18,9 +18,9 @@ price = chubbiesSoup.select('small')
 
 linkBlock = chubbiesSoup.find_all("div",{"class":"details"})
 
-for line in linkBlock:
-   for row in line.find_all('a'):
-      print row['href']
+#for line in linkBlock:
+#   for row in line.find_all('a'):
+#      print row['href']
 
 type(title)
 

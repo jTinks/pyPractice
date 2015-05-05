@@ -1,6 +1,6 @@
 #! /usr/bin/python 
 
-import requests, bs4, itertools
+import requests, bs4, urllib, os
 
 res = requests.get('http://www.chubbiesshorts.com/collections/the-originals/')
 
@@ -18,8 +18,6 @@ price = chubbiesSoup.select('small')
 
 linkBlock = chubbiesSoup.find_all("div",{"class":"details"})
 
-imgBlock = chubbiesSoup.select('.colleflex')
-
 urlList = []
 
 for line in linkBlock:
@@ -31,16 +29,14 @@ detailsList = []
 for line in details:
    detailsList.append(line.get_text(" | ", strip=True))
 
-imgList = []
+titleList = []
 
-for line in imgBlock:
-   for row in line.find_all('img'):
-      imgList.append(row['src'])
+for line in title:
+   titleList.append(line.get_text(" | ", strip=True))
 
-print imgList[2]
 
-#for deet, url in zip(detailsList, urlList):
-#   print deet + " | " + 'http://www.chubbiesshorts.com' + url
+for deet, url in zip(detailsList, urlList):
+   print deet + " | " + 'http://www.chubbiesshorts.com' + url
 
 type(title)
 

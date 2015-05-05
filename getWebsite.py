@@ -1,6 +1,6 @@
 #! /usr/bin/python 
 
-import requests, bs4
+import requests, bs4, itertools
 
 res = requests.get('http://www.chubbiesshorts.com/collections/the-originals/')
 
@@ -10,17 +10,37 @@ chubbiesSoup = bs4.BeautifulSoup(res.text)
 
 type(chubbiesSoup)
 
-title = chubbiesSoup.select('.product-title')
-
 details = chubbiesSoup.select('.details')
+
+title = chubbiesSoup.select('.product-title')
 
 price = chubbiesSoup.select('small')
 
 linkBlock = chubbiesSoup.find_all("div",{"class":"details"})
 
-#for line in linkBlock:
-#   for row in line.find_all('a'):
-#      print row['href']
+imgBlock = chubbiesSoup.select('.colleflex')
+
+urlList = []
+
+for line in linkBlock:
+   for row in line.find_all('a'):
+      urlList.append(row['href'])
+
+detailsList = []
+
+for line in details:
+   detailsList.append(line.get_text(" | ", strip=True))
+
+imgList = []
+
+for line in imgBlock:
+   for row in line.find_all('img'):
+      imgList.append(row['src'])
+
+print imgList[2]
+
+#for deet, url in zip(detailsList, urlList):
+#   print deet + " | " + 'http://www.chubbiesshorts.com' + url
 
 type(title)
 
@@ -39,9 +59,8 @@ type(details)
 #   print title[i].get_text("|", strip=True) + \
 #         " - " + price[i].get_text("|", strip=True)
 
-for i in range(len(details)):
-   for line in linkBlock:
-      for row in line.find_all('a'):
-         print details[i].get_text(" | ", strip=True) + " | " + \
-               row['href']
+#for i in range(len(details)):
+#   print details[i].get_text(" | ", strip=True) + " | " + \
+              
+
 

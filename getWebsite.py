@@ -16,7 +16,11 @@ details = chubbiesSoup.select('.details')
 
 price = chubbiesSoup.select('small')
 
-link = chubbiesSoup.find_all('a')
+linkBlock = chubbiesSoup.find_all("div",{"class":"details"})
+
+for line in linkBlock:
+   for row in line.find_all('a'):
+      print row['href']
 
 type(title)
 
@@ -30,13 +34,14 @@ type(details)
 
 #print price[0].get_text("|", strip=True)
 
-for i in range(len(link)):
-   print(i.get('href'))
 
 #for i in range(len(title)):
 #   print title[i].get_text("|", strip=True) + \
 #         " - " + price[i].get_text("|", strip=True)
 
-#for i in range(len(details)):
-#   print details[i].get_text(" | ", strip=True)
+for i in range(len(details)):
+   for line in linkBlock:
+      for row in line.find_all('a'):
+         print details[i].get_text(" | ", strip=True) + " | " + \
+               row['href']
 

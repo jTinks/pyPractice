@@ -1,6 +1,6 @@
 #! /usr/bin/python
 
-import requests, bs4, urllib, os
+import requests, bs4, urllib, os, smtplib
 
 def getSizes(baseURL):
 
@@ -12,11 +12,15 @@ def getSizes(baseURL):
 
    titleList = []
 
-   urlList = []
+   #urlList = ['http://www.chubbiesshorts.com/collections/the-originals/products/the-blutos']
+
+   urlList = []   
 
    sizeList = []
 
    soldOutList = []
+
+   outPut = []
    
    title = chubbiesSoup.select('.product-title')
 
@@ -38,28 +42,53 @@ def getSizes(baseURL):
       
       sizeBlock = soup.find_all("label", {"class":"btn"})
 
-      list1 = []
+      inStock = []
 
-      list2 = []
+      outStock = []
      
       for line in sizeBlock:
-         list1.append(line.get_text(),)
+         inStock.append(line.get_text())
       
       for line in soldOut:
-         list2.append(line.get_text(),)
+         outStock.append(line.get_text())
       
-      for x, y in zip(list1, list2):
+      for x, y in zip(inStock, outStock):
          if x == y:
-            list1.remove(x)
-      
-      for line in list1:
-         sizeList.append(line)
+            inStock.remove(x)
 
-   for line in sizeList:
-      print line
-      
+      sizeList.append('[%s]' % ', '.join(map(str, inStock)))
+
+   if len(titleList) == len(sizeList):
+      for x, y, z in zip(titleList, sizeList, urlList):
+         outPut.append(x + "  " + y + "  " + z + "\n")
+         outPut.append("\n")
+   else:
+      outPut.append('# of titles does not match # of sizes in lists')
+
+   value = ''.join(outPut)
+
+   return value 
      
 
 
 
-getSizes('http://www.chubbiesshorts.com/collections/the-originals/')
+theOriginals = getSizes('http://www.chubbiesshorts.com/collections/the-originals/')
+
+theTrunks = getSizes('http://www.chubbiesshorts.com/collections/the-swim-trunks/')
+
+
+sender = 'jtink010@yahoo.com'
+receivers = ['jtink010@gmail.com']
+
+message = """From: Chubbies Alert <from@fromdomain.com>
+To: To Person <to@todomain.com>
+Subject: Chubbies Size Update
+""" + theOriginals
+
+try:
+   smtpObj = smtplib.SMTP('localhost')
+   smtpObj.sendmail(sender, receivers, message)         
+   print "Successfully sent email"
+except SMTPException:
+   print "Error: unable to send email"
+

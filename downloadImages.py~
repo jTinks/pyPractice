@@ -30,10 +30,9 @@ def getChubbiesImgs(baseURL, folderName):
    for url, title in zip(imgList, titleList):
       urllib.urlretrieve(url, os.path.join('chubbiesPics/' + folderName, title + '.jpg'))
 
-#url = 'http://www.chubbiesshorts.com/collections/the-originals/'
-#folder = 'theOriginals'
-
 getChubbiesImgs('http://www.chubbiesshorts.com/collections/the-originals/', 'theOriginals')
+
+getChubbiesImgs('http://www.chubbiesshorts.com/collections/the-swim-trunks/', 'theTrunks')
 
 
 

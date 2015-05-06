@@ -38,6 +38,7 @@ imgListO = []
 
 imgListT = []
 
+
 for line in imgBlockO:
    for row in line.find_all('img'):
       imgListO.append('http:' + row['src'])

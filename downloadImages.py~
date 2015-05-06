@@ -1,0 +1,41 @@
+#! /usr/bin/python 
+
+import requests, bs4, urllib, os
+
+
+def getChubbiesImgs(baseURL, folderName):
+
+   if not os.path.exists('chubbiesPics/' + folderName):
+      os.makedirs('chubbiesPics/' + folderName)
+
+   res = requests.get(baseURL)
+   res.raise_for_status()
+   chubbiesSoup = bs4.BeautifulSoup(res.text)
+
+   title = chubbiesSoup.select('.product-title')
+   
+   imgBlock = chubbiesSoup.select('.colleflex')
+
+   titleList = []
+
+   for line in title:
+      titleList.append(line.get_text(" | ", strip=True))
+
+   imgList = []
+
+   for line in imgBlock:
+      for row in line.find_all('img'):
+         imgList.append('http:' + row['src'])
+
+   for url, title in zip(imgList, titleList):
+      urllib.urlretrieve(url, os.path.join('chubbiesPics/' + folderName, title + '.jpg'))
+
+#url = 'http://www.chubbiesshorts.com/collections/the-originals/'
+#folder = 'theOriginals'
+
+getChubbiesImgs('http://www.chubbiesshorts.com/collections/the-originals/', 'theOriginals')
+
+
+
+
+

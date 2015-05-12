@@ -1,6 +1,6 @@
 #! /usr/bin/python
 
-import requests, bs4, urllib, os, smtplib
+import requests, bs4, urllib, os, smtplib, sys
 
 def getSizes(baseURL, size):
 
@@ -34,8 +34,6 @@ def getSizes(baseURL, size):
       
       message = """From: Chubbies Alert 
                 
-
-                
                 """ + 'Size %s is in stock' %size + '\n' + baseURL
       try:
          smtpObj = smtplib.SMTP('localhost')
@@ -44,9 +42,12 @@ def getSizes(baseURL, size):
       except SMTPException:
          print "Error: unable to send email"
 
+   else:
+      print size + ' is out of stock.'
 
 
+getSizes(sys.argv[1], sys.argv[2])
 
-theShorts = getSizes('http://www.chubbiesshorts.com/collections/the-originals/products/the-blutos', 'XL')
+#theShorts = getSizes('http://www.chubbiesshorts.com/collections/the-originals/products/the-blutos', 'XL')
 
 

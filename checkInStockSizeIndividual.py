@@ -1,6 +1,8 @@
 #! /usr/bin/python
 
-import requests, bs4, urllib, os, smtplib
+# Find out if a specific size for a pair of Chubbies is in stock. 
+
+import requests, bs4, urllib, os, smtplib, sys
 
 def getSizes(baseURL, size):
 
@@ -42,9 +44,12 @@ def getSizes(baseURL, size):
       except SMTPException:
          print "Error: unable to send email"
 
+   else:
+      print size + ' is out of stock.'
 
 
+getSizes(sys.argv[1], sys.argv[2])
 
-theShorts = getSizes('http://www.chubbiesshorts.com/collections/the-originals/products/the-blutos', 'XL')
+#theShorts = getSizes('http://www.chubbiesshorts.com/collections/the-originals/products/the-blutos', 'XL')
 
 

@@ -14,8 +14,8 @@ This is a test e-mail message.
 """
 
 try:
-   smtpObj = smtplib.SMTP('localhost')
+   smtpObj = smtplib.SMTP(host='smtp.gmail.com', port=587)
    smtpObj.sendmail(sender, receivers, message)         
    print "Successfully sent email"
-except SMTPException:
+except smtplib.SMTPException:
    print "Error: unable to send email"

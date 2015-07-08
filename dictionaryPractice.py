@@ -1,4 +1,4 @@
-__author__ = 'jtink'
+#!/usr/bin/python
 
 # Exploring the dictionary data type
 
@@ -6,7 +6,7 @@ brian = {'Age': '25', 'Birthday': 'January 1', 'Height': '6 foot, 4 inches', 'We
 
 print ""
 
-#for key, value in jaysen.iteritems():
+#for key, value in brian.iteritems():
 #    print key, value
 
 
